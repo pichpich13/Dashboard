@@ -18,7 +18,9 @@ def load_data():
     # on appel l'api qui contient les données
     data = requests.get('http://93.4.84.5:5000/get_csv_pipeline')
 
-    data_emission_food_cycle = pd.read_csv(r"C:\Users\quent\Documents\code\python\green_ia\Dashboard\food-emissions-life-cycle.csv", encoding='utf-8', sep=',', low_memory=False)
+    data_emission_food_cycle = requests.get('http://93.4.84.5:5000/get_csv_food_emission')
+    
+
     return data, data_emission_food_cycle
 
 df, data_emission_food_cycle = load_data()
