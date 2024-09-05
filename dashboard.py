@@ -4,6 +4,9 @@ import seaborn as sns  # Importe Seaborn
 import matplotlib.pyplot as plt
 import plotly.express as px
 import numpy as np
+# import de la libnrairie pour appelé l'api
+import requests
+
 
 # Configuration graphique de matplotlib
 plt.rcParams['font.size'] = 12
@@ -12,7 +15,9 @@ plt.style.use('classic')
 # Charger les données
 @st.cache_data
 def load_data():
-    data = pd.read_csv(r"C:\Users\quent\Documents\code\python\green_ia\Dashboard\pipeline_processing.csv", encoding='utf-8', sep='\t', low_memory=False)
+    # on appel l'api qui contient les données
+    data = requests.get('http://93.4.84.5:5000/get_csv_pipeline')
+
     data_emission_food_cycle = pd.read_csv(r"C:\Users\quent\Documents\code\python\green_ia\Dashboard\food-emissions-life-cycle.csv", encoding='utf-8', sep=',', low_memory=False)
     return data, data_emission_food_cycle
 
