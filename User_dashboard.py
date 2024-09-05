@@ -42,7 +42,7 @@ def get_ecoscore_data(codes):
     return pd.DataFrame(products_info)
 
 # Emplacement de votre fichier JSON
-filepath = r'C:\Users\quent\Documents\code\python\green_ia\Collecte-datas\usr_json_ean_scanned_example\0_usr_example_json.json'
+filepath = '0_usr_example_json.json'
 df = load_data(filepath)
 codes = df[0].tolist()  # Supposant que les codes-barres sont dans la première colonne
 
