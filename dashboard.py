@@ -25,7 +25,7 @@ def load_data():
         
         # Lire les CSV à partir de la réponse
         data = pd.read_csv(io.StringIO(data_response.text), encoding='utf-8', sep='\t', low_memory=True)
-        data_emission_food_cycle = pd.read_csv(io.StringIO(data_emission_response.text), encoding='utf-8', sep='\t', low_memory=False)
+        data_emission_food_cycle = pd.read_csv(io.StringIO(data_emission_response.text), encoding='utf-8', sep='\t', low_memory=True)
     except requests.exceptions.RequestException as e:
         st.error(f"Erreur lors de la récupération des données : {e}")
         return None, None
