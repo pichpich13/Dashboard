@@ -32,7 +32,8 @@ def load_data():
 
     return data, data_emission_food_cycle
 
-df, data_emission_food_cycle = load_data()
+with st.spinner('Chargement des données...'):
+    df, data_emission_food_cycle = load_data()
 
 def plot_ecoscore_distribution(data):
     ecoscores = data['ecoscore_grade'].value_counts().sort_index()
@@ -87,7 +88,7 @@ def plot_ecoscore_distribution_by_country(data):
 
     # limitation du nombre de pays a afficher a 30
     country_scores = country_scores.sort_values(by='ecoscore_score', ascending=False).head(30)
-     
+
     
     # Calcul d'une nouvelle métrique pour inverser la relation taille-valeur
     max_score = country_scores['ecoscore_score'].max()
