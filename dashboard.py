@@ -13,6 +13,8 @@ import io
 plt.rcParams['font.size'] = 12
 plt.style.use('classic')
 
+print("Début du script")
+
 # Charger les données
 @st.cache_data(ttl=3600)
 def load_data():
