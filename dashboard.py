@@ -30,6 +30,7 @@ def load_data():
         st.error(f"Erreur lors de la récupération des données : {e}")
         return None, None
 
+    print("Données chargées avec succès.")
     return data, data_emission_food_cycle
 
 with st.spinner('Chargement des données...'):
