@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 import numpy as np
 # import de la libnrairie pour appelé l'api
-import request
+import requests
 import io
 
 
