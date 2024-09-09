@@ -5,7 +5,8 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 import numpy as np
 # import de la libnrairie pour appelé l'api
-import requests
+import request
+import io
 
 
 # Configuration graphique de matplotlib
@@ -15,13 +16,13 @@ plt.style.use('classic')
 # Charger les données
 @st.cache_data
 def load_data():
-    # on appel l'api qui contient les données
-    data = requests.get('http://93.4.84.5:5000/get_csv_pipeline')
-    data = pd.read_csv(data, encoding='utf-8', sep='\t', low_memory=False, on_bad_lines='skip')
+    # Appel à l'API pour récupérer les données
+    data_response = requests.get('http://93.4.84.5:5000/get_csv_pipeline')
+    data_emission_response = requests.get('http://93.4.84.5:5000/get_csv_food_emission')
 
-    data_emission_food_cycle = requests.get('http://93.4.84.5:5000/get_csv_food_emission')
-    data_emission_food_cycle = pd.read_csv(data_emission_food_cycle, encoding='utf-8', sep='\t', low_memory=False, on_bad_lines='skip')
-    
+    # Conversion du contenu de la réponse en dataframe avec StringIO
+    data = pd.read_csv(io.StringIO(data_response.text), encoding='utf-8', sep='\t', low_memory=False)
+    data_emission_food_cycle = pd.read_csv(io.StringIO(data_emission_response.text), encoding='utf-8', sep='\t', low_memory=False)
 
     return data, data_emission_food_cycle
 
