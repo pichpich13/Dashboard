@@ -21,7 +21,7 @@ def load_data():
     data_emission_response = requests.get('http://93.4.84.5:5000/get_csv_food_emission')
 
     # Conversion du contenu de la réponse en dataframe avec StringIO
-    data = pd.read_csv(io.StringIO(data_response.text), encoding='utf-8', sep='\t', low_memory=False)
+    data = pd.read_csv(io.StringIO(data_response.text), encoding='utf-8', sep='\t', low_memory=True)
     data_emission_food_cycle = pd.read_csv(io.StringIO(data_emission_response.text), encoding='utf-8', sep='\t', low_memory=False)
 
     return data, data_emission_food_cycle
