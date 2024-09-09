@@ -77,12 +77,17 @@ def dansity_plot_ecoscore_distribution(data):
 
 
 def plot_ecoscore_distribution_by_country(data):  
+    
     # Préparation des données comme précédemment
     filtered_data = data.dropna(subset=['ecoscore_score', 'countries_en'])
     filtered_data = filtered_data[filtered_data['ecoscore_score'] > 0]
     filtered_data = filtered_data[~filtered_data['countries_en'].str.contains(",")]
     country_scores = filtered_data.groupby('countries_en')['ecoscore_score'].mean().reset_index()
     country_scores = country_scores[country_scores['ecoscore_score'] > 0]
+
+    # limitation du nombre de pays a afficher a 30
+    country_scores = country_scores.sort_values(by='ecoscore_score', ascending=False).head(30)
+     
     
     # Calcul d'une nouvelle métrique pour inverser la relation taille-valeur
     max_score = country_scores['ecoscore_score'].max()
