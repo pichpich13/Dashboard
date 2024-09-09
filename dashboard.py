@@ -17,15 +17,20 @@ plt.style.use('classic')
 @st.cache_data(ttl=3600)
 def load_data():
     try:
+        print("Chargement des données...")
         data_response = requests.get('http://93.4.84.5:5000/get_csv_pipeline', timeout=10)
+        print("Données de l'appel API 1 récupérées")
         data_emission_response = requests.get('http://93.4.84.5:5000/get_csv_food_emission', timeout=10)
+        print("Données de l'appel API 2 récupérées")
 
         data_response.raise_for_status()  # Génère une erreur pour un code HTTP 4xx/5xx
         data_emission_response.raise_for_status()
         
         # Lire les CSV à partir de la réponse
         data = pd.read_csv(io.StringIO(data_response.text), encoding='utf-8', sep='\t', low_memory=True)
+        print("Données de l'appel API 1 chargées")
         data_emission_food_cycle = pd.read_csv(io.StringIO(data_emission_response.text), encoding='utf-8', sep='\t', low_memory=True)
+        print("Données de l'appel API 2 chargées")
     except requests.exceptions.RequestException as e:
         st.error(f"Erreur lors de la récupération des données : {e}")
         return None, None
