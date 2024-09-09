@@ -14,15 +14,21 @@ plt.rcParams['font.size'] = 12
 plt.style.use('classic')
 
 # Charger les données
-@st.cache_data
+@st.cache_data(ttl=3600)
 def load_data():
-    # Appel à l'API pour récupérer les données
-    data_response = requests.get('http://93.4.84.5:5000/get_csv_pipeline')
-    data_emission_response = requests.get('http://93.4.84.5:5000/get_csv_food_emission')
+    try:
+        data_response = requests.get('http://93.4.84.5:5000/get_csv_pipeline', timeout=10)
+        data_emission_response = requests.get('http://93.4.84.5:5000/get_csv_food_emission', timeout=10)
 
-    # Conversion du contenu de la réponse en dataframe avec StringIO
-    data = pd.read_csv(io.StringIO(data_response.text), encoding='utf-8', sep='\t', low_memory=True)
-    data_emission_food_cycle = pd.read_csv(io.StringIO(data_emission_response.text), encoding='utf-8', sep='\t', low_memory=False)
+        data_response.raise_for_status()  # Génère une erreur pour un code HTTP 4xx/5xx
+        data_emission_response.raise_for_status()
+        
+        # Lire les CSV à partir de la réponse
+        data = pd.read_csv(io.StringIO(data_response.text), encoding='utf-8', sep='\t', low_memory=True)
+        data_emission_food_cycle = pd.read_csv(io.StringIO(data_emission_response.text), encoding='utf-8', sep='\t', low_memory=False)
+    except requests.exceptions.RequestException as e:
+        st.error(f"Erreur lors de la récupération des données : {e}")
+        return None, None
 
     return data, data_emission_food_cycle
 
