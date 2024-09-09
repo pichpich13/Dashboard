@@ -16,6 +16,8 @@ plt.style.use('classic')
 # Charger les données
 @st.cache_data(ttl=3600)
 def load_data():
+    
+    print("Chargement des données...")
     try:
         print("Chargement des données...")
         data_response = requests.get('http://93.4.84.5:5000/get_csv_pipeline', timeout=10)
