@@ -21,7 +21,7 @@ def load_data():
     
     print("Chargement des données...")
     try:
-        data = pd.read_csv(("./pipeline_processing.csv"), encoding='utf-8', sep='\t', low_memory=True)
+        data = pd.read_csv(("pipeline_processing.csv"), encoding='utf-8', sep='\t', low_memory=True)
         print("Données de l'appel API 1 chargées")
         data_emission_food_cycle = pd.read_csv(("food-emissions-life-cycle.csv"), encoding='utf-8', sep=',', low_memory=True)
         print("Données de l'appel API 2 chargées")
