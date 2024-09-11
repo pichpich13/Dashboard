@@ -4,6 +4,9 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import plotly.express as px
 import numpy as np
+# import de la libnrairie pour appelé l'api
+import requests
+import io
 
 
 # Configuration graphique de matplotlib
@@ -17,10 +20,14 @@ print("Début du script")
 def load_data():
     
     print("Chargement des données...")
-    data = pd.read_csv(("./pipeline_processing.csv"), encoding='utf-8', sep='\t', low_memory=True)
-    print("Données de l'appel API 1 chargées")
-    data_emission_food_cycle = pd.read_csv(("./food-emissions-life-cycle.csv"), encoding='utf-8', sep=',', low_memory=True)
-    print("Données de l'appel API 2 chargées")
+    try:
+        data = pd.read_csv(("./pipeline_processing.csv"), encoding='utf-8', sep='\t', low_memory=True)
+        print("Données de l'appel API 1 chargées")
+        data_emission_food_cycle = pd.read_csv(("food-emissions-life-cycle.csv"), encoding='utf-8', sep='\t', low_memory=True)
+        print("Données de l'appel API 2 chargées")
+    except requests.exceptions.RequestException as e:
+        st.error(f"Erreur lors de la récupération des données : {e}")
+        return None, None
 
     print("Données chargées avec succès.")
     return data, data_emission_food_cycle
